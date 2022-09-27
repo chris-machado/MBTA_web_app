@@ -1,7 +1,9 @@
 import pandas as pd
 import mysqldb
+import datetime
 
 df = pd.read_csv('mbta.csv', low_memory=False)
+df.replace(to_replace='NaN', value='', inplace=True)
 mbtaDictList = []
 mbtaDict = {}
 for ind, row in df.iterrows():
