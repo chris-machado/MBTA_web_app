@@ -1,0 +1,51 @@
+import pandas as pd
+import mysql.connector
+import datetime
+
+df = pd.read_csv('mbta.csv', low_memory=False)
+df.replace(to_replace='NaN', value='', inplace=True)
+
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="MyNewPass",
+    database="MBTAdb"
+    )
+
+
+
+mycursor = mydb.cursor()
+sql = '''insert into mbta_buses ( 
+                id, 
+                longitude, 
+                latitude, 
+                bearing,
+                current_status,
+                current_stop_sequence,
+                direction_id,
+                label,
+                occupancy_status,
+                speed,
+                updated_at
+                ) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'''
+
+for ind, row in df.iterrows():
+    id = row.iloc[2]
+    latitude = row.iloc[3]
+    longitude = row.iloc[4] 
+    bearing = row.iloc[5] 
+    current_status = row.iloc[6]
+    current_stop_sequence = row.iloc[7]
+    direction_id = row.iloc[8]
+    label = row.iloc[9],
+    occupancy_status = row.iloc[10]
+    speed = row.iloc[11] 
+    updated_at = row.iloc[12]
+
+    vals = [id, latitude, longitude, bearing, current_status, current_stop_sequence,
+        direction_id, label, occupancy_status, speed, updated_at]
+
+    mycursor.execute(sql, vals)
+
+    mydb.commit()

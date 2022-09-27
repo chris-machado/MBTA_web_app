@@ -21,4 +21,4 @@ for ind, row in df.iterrows():
 
     mbtaDictList.append(mbtaDict)
 
-    mysqldb.insertMBTARecord(mbtaDict)
+    mysqldb.insertMBTARecord(mbtaDictList)
