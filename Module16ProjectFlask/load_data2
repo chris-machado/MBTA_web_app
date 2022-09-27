@@ -17,36 +17,37 @@ mydb = mysql.connector.connect(
 
 
 mycursor = mydb.cursor()
-sql = '''insert into mbta_buses ( 
-                id, 
-                longitude, 
-                latitude, 
-                bearing,
-                current_status,
-                current_stop_sequence,
-                direction_id,
-                label,
-                occupancy_status,
-                speed,
-                updated_at
-                ) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'''
+sql = '''insert into `mbta_buses` ( id, latitude, longitude, direction_id, occupancy_status, 
+                updated_at) values (%s,%s,%s,%s,%s,%s)'''
+
+"""                 ,
+                `current_status`,
+                `current_stop_sequence`,
+                `direction_id`,
+                `label`,
+                `occupancy_status`,
+                `speed`,
+                `updated_at`
+                ) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) """
 
 for ind, row in df.iterrows():
-    id = row.iloc[2]
-    latitude = row.iloc[3]
-    longitude = row.iloc[4] 
-    bearing = row.iloc[5] 
-    current_status = str(row.iloc[6])
-    current_stop_sequence = row.iloc[7]
-    direction_id = row.iloc[8]
-    label = str(row.iloc[9])
-    occupancy_status = str(row.iloc[10])
-    speed = 1 #row.iloc[11] 
-    updated_at = row.iloc[12]
-
-    vals = [id, latitude, longitude, bearing, current_status, current_stop_sequence,
-        direction_id, label, occupancy_status, speed, updated_at]
-
-    mycursor.execute(sql, vals)
-
+    id = row.iloc[0]
+    latitude = row.iloc[1]
+    longitude = row.iloc[2] 
+    # bearing = row.iloc[3] 
+    # current_status = str(row.iloc[4])
+    # current_stop_sequence = row.iloc[5]
+    direction_id = row.iloc[6]
+    # label = str(row.iloc[7])
+    occupancy_status = str(row.iloc[8])
+    # speed = row.iloc[9] 
+    updated_at = row.iloc[10]
+    
+    vals = [id, latitude, longitude, direction_id, occupancy_status, updated_at]
+    mycursor.execute(sql, vals, multi=True)
     mydb.commit()
+
+"""     vals = [id, latitude, longitude, bearing, current_status, current_stop_sequence,
+        direction_id, label, occupancy_status, speed, updated_at] """
+
+    
