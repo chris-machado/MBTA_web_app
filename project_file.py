@@ -2,6 +2,7 @@ import os
 import pymysql
 import pandas as pd
 import datetime 
+import numpy
 
 host = '127.0.0.1'
 port = '3306'
@@ -19,3 +20,5 @@ conn = pymysql.connect(
 
 df = pd.read_sql_query("SELECT * FROM mbta_buses",
     conn)
+
+
