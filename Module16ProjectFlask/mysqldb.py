@@ -2,9 +2,9 @@ import mysql.connector
 
 def insertMBTARecord(mbtaList):
     mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="MyNewPass",
+    host="192.168.1.7",
+    user="chris",
+    password="E$XiVMs11",
     database="MBTAdb"
     )
 
