@@ -2,7 +2,7 @@ import pandas as pd
 import mysqldb
 
 df = pd.read_csv('mbta.csv', low_memory=False)
-
+mbtaDictList = []
 mbtaDict = {}
 for ind, row in df.iterrows():
     mbtaDict['id'] = row.iloc[2]
@@ -16,5 +16,7 @@ for ind, row in df.iterrows():
     mbtaDict['occupancy_status'] = row.iloc[10]
     mbtaDict['speed'] = row.iloc[11] 
     mbtaDict['updated_at'] = row.iloc[12]
+
+    mbtaDictList.append(mbtaDict)
 
     mysqldb.insertMBTARecord(mbtaDict)
