@@ -14,7 +14,7 @@ for ind, row in df.iterrows():
     mbtaDict['direction_id'] = int(row.iloc[8])
     mbtaDict['label'] = row.iloc[9],
     mbtaDict['occupancy_status'] = row.iloc[10]
-    mbtaDict['speed'] = int(row.iloc[11]) 
+    mbtaDict['speed'] = row.iloc[11] 
     mbtaDict['updated_at'] = row.iloc[12]
 
     mysqldb.insertMBTARecord(mbtaDict)
