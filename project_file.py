@@ -2,7 +2,6 @@ import os
 import pymysql
 import pandas as pd
 import datetime 
-import numpy
 
 def calc_speed(list_1, list_2):  # must be in format (Latitude, longitude, time)
     p1 = list_1[0:2]
@@ -16,7 +15,7 @@ def calc_speed(list_1, list_2):  # must be in format (Latitude, longitude, time)
     distance = haversine(p1, p2)
     speed = distance/dt
     
-    print(f"p1: {p1} p2: {p2} t: {t}")
+    print(f"p1: {p1} p2: {p2} t: {t1}")
     return speed
 
 
