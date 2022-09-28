@@ -17,7 +17,7 @@ conn = pymysql.connect(
     passwd=password,
     db=database,
     charset='utf8mb4')
-
+df = pd.read_sql_query("SELECT * FROM mbta_buses", conn)
 
 ### compile a list of unique buses ### 
 busIds = []
@@ -48,7 +48,7 @@ def calc_speed(list_1, list_2):  # must be in format (Latitude, longitude, time)
     
     distance = haversine(p1, p2, unit='mi')
     speed = distance/dt
-
+    print(speed)
     return speed
 
 point1 = [-71.1174495, 42.37307976, datetime.datetime.now()]
@@ -58,8 +58,8 @@ for ind, bus in busDict.items():
     speedDict[ind] = []
     for inx, row in bus.iterrows():
         if row['current_stop_sequence'] != 1:
-            pass
-        else:
+            stopSeq = row['current_stop_sequence']
+        elif row['current_stop_sequence'] == 1 and stopSeq == 24:
             point2.append(row['latitude'])
             point2.append(row['longitude'])
             ts = row['updated_at'] 
@@ -69,3 +69,7 @@ for ind, bus in busDict.items():
             
             point1 = point2
             point2 = []
+        else:
+            stopSeq = row['current_stop_sequence']
+
+print(speedDict)
