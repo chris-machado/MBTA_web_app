@@ -3,47 +3,42 @@ import mysql.connector
 import datetime
 
 df = pd.read_csv('mbta.csv', low_memory=False)
-df.replace(to_replace='NaN', value=0, inplace=True)
-df.replace(to_replace='nan', value=0, inplace=True)
+df.replace(to_replace='NaN', value='null', inplace=True)
+df.replace(to_replace='nan', value='null', inplace=True)
 
 
 mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="MyNewPass",
+    host="192.168.1.7",
+    user="chris",
+    password="E$XiVMs11",
     database="MBTAdb"
     )
 
 
 
 mycursor = mydb.cursor()
-sql = '''insert into `mbta_buses` ( id, latitude, longitude, direction_id, occupancy_status, 
-                updated_at) values (%s,%s,%s,%s,%s,%s)'''
-
-"""                 ,
-                `current_status`,
-                `current_stop_sequence`,
-                `direction_id`,
-                `label`,
-                `occupancy_status`,
-                `speed`,
-                `updated_at`
-                ) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) """
+sql = '''insert into `mbta_buses` ( id, latitude, longitude, bearing, current_status, 
+        current_stop_sequence, direction_id, label,
+                occupancy_status, speed, updated_at
+                ) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) '''
 
 for ind, row in df.iterrows():
-    id = row.iloc[0]
-    latitude = row.iloc[1]
-    longitude = row.iloc[2] 
-    # bearing = row.iloc[3] 
-    # current_status = str(row.iloc[4])
-    # current_stop_sequence = row.iloc[5]
-    direction_id = row.iloc[6]
-    # label = str(row.iloc[7])
-    occupancy_status = str(row.iloc[8])
-    # speed = row.iloc[9] 
-    updated_at = row.iloc[10]
+    print(row)
+    id = row.loc['id']
+    latitude = row.loc['latitude']
+    longitude = row.loc['longitude'] 
+    bearing = row.loc['bearing'] 
+    current_status = row.loc['current_status']
+    current_stop_sequence = row.loc['current_stop_sequence']
+    direction_id = row.loc['direction_id']
+    label = row.loc['label']
+    occupancy_status = row.loc['occupancy_status']
+    speed = row.loc['speed'] 
+    updated_at = row.loc['updated_at']
     
-    vals = [id, latitude, longitude, direction_id, occupancy_status, updated_at]
+    vals = [id, latitude, longitude, bearing, current_status, current_stop_sequence,
+        direction_id, label, occupancy_status, speed, updated_at] 
+
     mycursor.execute(sql, vals, multi=True)
     mydb.commit()
 
