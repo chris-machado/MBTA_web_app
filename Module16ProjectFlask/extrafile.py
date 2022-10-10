@@ -6,3 +6,6 @@ b2 = ['l1', 'l2', 'l3']
 
 for item in b2:
     print(item)
+
+if a != 2:
+    print('stop')
