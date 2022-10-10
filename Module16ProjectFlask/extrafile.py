@@ -6,5 +6,3 @@ b2 = ['l1', 'l2', 'l3']
 
 for item in b2:
     print(item)
-if b2:
-    print('yes')
