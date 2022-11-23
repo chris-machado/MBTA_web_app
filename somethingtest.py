@@ -2,3 +2,5 @@
 #
 # 
 a = 'something' 
+b = 1
+c =2
